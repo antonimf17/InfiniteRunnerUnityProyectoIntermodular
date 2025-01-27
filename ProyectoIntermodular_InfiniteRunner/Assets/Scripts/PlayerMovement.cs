@@ -1,7 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement; 
 
-public class Script : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
+    bool alive = true;
+
     [Header("ParametrosIniciales")]
     [SerializeField] float speed = 5;
     [SerializeField] Rigidbody rb;
@@ -13,6 +18,9 @@ public class Script : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!alive) return;
+
+
         Vector3 fowardMove = transform.forward * speed * Time.fixedDeltaTime;
         Vector3 horizontalMove = transform.right * horizontalInput * speed * Time.fixedDeltaTime * horizontalMultiplier;
         rb.MovePosition(rb.position + fowardMove + horizontalMove);
@@ -21,8 +29,27 @@ public class Script : MonoBehaviour
 
 
     // Update is called once per frame
-   private void Update()
+    private void Update()
     {
         horizontalInput = Input.GetAxis("Horizontal");
+
+        if (transform.position.y < -5)
+        {
+            Die();
+        }
     }
+
+    public void Die()
+    {
+        alive = false;
+        //Restart the game
+        Invoke("Restart", 2);
+    }
+
+    void Restart ()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+    }
+
 }

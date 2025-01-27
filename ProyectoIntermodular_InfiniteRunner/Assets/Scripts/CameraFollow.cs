@@ -7,14 +7,14 @@ public class A : MonoBehaviour
     Vector3 offset;
 
 
-    void Start()
+   private void Start()
     {
         offset = transform.position = player.position;
         
     }
 
   
-    void Update()
+    private void Update()
     {
        Vector3 targetPos = player.position + offset;
         targetPos.x = 0;
