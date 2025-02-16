@@ -3,7 +3,7 @@ using UnityEngine;
 public class A : MonoBehaviour
 {
 
-    public Transform player;
+    [SerializeField] Transform player;
     Vector3 offset;
 
 

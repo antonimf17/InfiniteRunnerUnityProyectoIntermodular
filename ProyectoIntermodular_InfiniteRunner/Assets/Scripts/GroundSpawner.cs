@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class GroundSpawner : MonoBehaviour
 {
-    public GameObject groundTile;
+    [SerializeField] GameObject groundTile;
     Vector3 Nextspawnpoint;
 
 
 
-    public void SpawnTile()
+    public void SpawnTile(bool spawnItems)
     {
         GameObject temp = Instantiate(groundTile, Nextspawnpoint, Quaternion.identity);
         Nextspawnpoint = temp.transform.GetChild(1).transform.position;
+
+        if (spawnItems) {
+            temp.GetComponent<Groundtile>().SpawnObstacle();
+            temp.GetComponent<Groundtile>().SpawnCoins();
+          }
     }
 
 
@@ -20,7 +25,14 @@ public class GroundSpawner : MonoBehaviour
     {
         for (int i = 0; i < 15; i++)
         {
-            SpawnTile();
+            if (i < 3)
+            {
+                SpawnTile(false);
+            }
+            else
+            {
+                SpawnTile(true);
+            }
         }
     }
 }

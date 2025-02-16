@@ -5,22 +5,29 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
 
-    public float turnSpeed = 90f;
+    [SerializeField] float turnSpeed = 90f;
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.GetComponent<Obstacle>() != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         //Check that the object we collied with is the player
-        if (other.gameObject.name != "Player")
+        if (!other.CompareTag("Player"))
         {
             return;
         }
         //Add to the playe's score
-        GameManager.inst.score++;
+        GameManager.inst.IncrementScore();
 
         //Destroy this coin object
         Destroy(gameObject);
     }
+    
+
 
 
     // Start is called before the first frame update
